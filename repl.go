@@ -7,6 +7,12 @@ import (
 	"strings"
 )
 
+type cliCommands struct {
+	name        string
+	description string
+	callback    func() error
+}
+
 func startRepl() {
 	scanner := bufio.NewScanner(os.Stdin)
 
@@ -20,13 +26,16 @@ func startRepl() {
 			continue
 		}
 
-		command := output[0]
-		switch command {
-		case "exit":
-			os.Exit(0)
+		commandName := output[0]
+		availCommands := getCommands()
+		command, ok := availCommands[commandName]
+
+		if !ok {
+			fmt.Println("invalid command")
+			continue
 		}
 
-		fmt.Println(output)
+		command.callback()
 
 	}
 }
@@ -35,4 +44,19 @@ func cleanInput(str string) []string {
 	lowered := strings.ToLower(str)
 	words := strings.Fields(lowered)
 	return words
+}
+
+func getCommands() map[string]cliCommands {
+	return map[string]cliCommands{
+		"help": {
+			name:        "help",
+			description: "Prints help menu",
+			callback:    callbackHelp,
+		},
+		"exit": {
+			name:        "exit",
+			description: "Exit from pokedex",
+			callback:    callbackExit,
+		},
+	}
 }
