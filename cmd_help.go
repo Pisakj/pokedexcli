@@ -3,9 +3,9 @@ package main
 import "fmt"
 
 func callbackHelp() error {
-	fmt.Println("=============================")
-	fmt.Println("Welcome to pokedex help menu!")
-	fmt.Println("Here are available commands:")
+	fmt.Println("=====================================")
+	fmt.Println("--- Welcome to pokedex help menu! ---")
+	fmt.Println("--- Here are available commands:  ---")
 
 	commands := getCommands()
 
