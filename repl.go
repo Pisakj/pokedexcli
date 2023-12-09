@@ -10,10 +10,10 @@ import (
 type cliCommands struct {
 	name        string
 	description string
-	callback    func() error
+	callback    func(*config) error
 }
 
-func startRepl() {
+func startRepl(cfg *config) {
 	scanner := bufio.NewScanner(os.Stdin)
 
 	for {
@@ -35,7 +35,10 @@ func startRepl() {
 			continue
 		}
 
-		command.callback()
+		err := command.callback(cfg)
+		if err != nil {
+			fmt.Println(err)
+		}
 
 	}
 }
@@ -60,8 +63,13 @@ func getCommands() map[string]cliCommands {
 		},
 		"map": {
 			name:        "map",
-			description: "List of available locations",
+			description: "Next page of available locations",
 			callback:    callbackMap,
+		},
+		"mapb": {
+			name:        "mapb",
+			description: "Previous page of available location",
+			callback:    callbackMapb,
 		},
 	}
 }
