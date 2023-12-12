@@ -88,8 +88,13 @@ func getCommands() map[string]cliCommands {
 		},
 		"inspect": {
 			name:        "inspect {pokemon name}",
-			description: "Allowed to expect a pokemon which is in your pokedex",
+			description: "Allowed to inspect a pokemon which is in your pokedex",
 			callback:    callbackInspect,
+		},
+		"pokedex": {
+			name:        "pokedex",
+			description: "Check your pokemon list in your pokedex",
+			callback:    callbackPokedex,
 		},
 	}
 }
